@@ -778,7 +778,6 @@ body {
 .positive-badge {
   background: rgba(34, 197, 94, 0.1) !important;
 
-  color: var(--success) !important;
 
   padding: 8px 12px;
 }
@@ -930,7 +929,7 @@ body {
 
   background: var(--bg-card) !important;
 
-  color: var(--text-secondary) !important;
+  /* color: var(--text-secondary) !important; */
 
   font-weight: 500;
 }

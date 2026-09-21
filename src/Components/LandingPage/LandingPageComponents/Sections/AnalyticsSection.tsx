@@ -49,7 +49,7 @@ const AnalyticsSection = () => {
                                     <h3>₹48.2L</h3>
                                 </div>
 
-                                <Badge className="positive-badge">
+                                <Badge bg="success" className="positive-badge">
                                     +34.2%
                                 </Badge>
                             </div>

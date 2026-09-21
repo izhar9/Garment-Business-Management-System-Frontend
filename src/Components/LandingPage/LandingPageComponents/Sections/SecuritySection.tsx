@@ -23,9 +23,7 @@ const SecuritySection = () => {
                     <div className="technology-list">
                         {[
                             "JWT Authentication",
-                            "OAuth2",
                             "Role Based Access",
-                            "Redis",
                             "Spring Security",
                         ].map((technology) => (
                             <Badge

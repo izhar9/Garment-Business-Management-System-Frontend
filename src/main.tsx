@@ -5,11 +5,21 @@ import App from './App.tsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { persistor, store } from './app/store.ts';
+import { PersistGate } from 'redux-persist/integration/react';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <Provider store={store}>
+      <PersistGate
+        loading={<div>Loading...</div>}
+        persistor={persistor}
+      >
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PersistGate>
+    </Provider>
   </StrictMode>,
 )

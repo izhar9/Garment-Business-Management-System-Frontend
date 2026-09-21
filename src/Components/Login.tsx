@@ -8,6 +8,9 @@ import {
   Col,
 } from "react-bootstrap";
 import "./Login.css";
+import { setCredentials } from "../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../app/hooks";
 
 type LoginState = {
   usernameError: string;
@@ -23,69 +26,87 @@ const initialState: LoginState = {
   success: "",
 };
 
-const loginAction = async (
-  _previousState: LoginState,
-  formData: FormData
-): Promise<LoginState> => {
-  const username = formData.get("username")?.toString().trim() || "";
-  const password = formData.get("password")?.toString() || "";
+const Login = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  // Field validation
-  if (!username) {
-    return {
-      ...initialState,
-      usernameError: "Username is required",
-    };
-  }
+  const loginAction = async (
+    _previousState: LoginState,
+    formData: FormData
+  ): Promise<LoginState> => {
+    const username = formData.get("username")?.toString().trim() || "";
+    const password = formData.get("password")?.toString() || "";
 
-  if (!password) {
-    return {
-      ...initialState,
-      passwordError: "Password is required",
-    };
-  }
-
-  try {
-    const response = await fetch(
-      "http://localhost:8080/api/auth/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      }
-    );
-    
-    if (!response.ok) {
+    // Field validation
+    if (!username) {
       return {
         ...initialState,
-        error: "Invalid username or password",
+        usernameError: "Username is required",
       };
     }
 
-    const data = await response.json();
+    if (!password) {
+      return {
+        ...initialState,
+        passwordError: "Password is required",
+      };
+    }
 
-    console.log("Login response:", data);
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            password,
+          }),
+        }
+      );
+      
+      if (!response.ok) {
+        return {
+          ...initialState,
+          error: "Invalid username or password",
+        };
+      }
 
-    return {
-      ...initialState,
-      success: "Login successful",
-    };
-  } catch (error) {
-    console.error("Login error:", error);
+      const data = await response.json();
 
-    return {
-      ...initialState,
-      error: "Unable to connect to server. Please try again.",
-    };
-  }
-};
+      console.log("Login response:", data);
+      
+      // Store response in Redux
+      dispatch(
+        setCredentials({
+          user: {
+            userId: data.userId,
+            username: data.username,
+            email: data.email,
+            role: data.role,
+          },
+          accessToken: data.accessToken,
+          expiresIn: data.expiresIn,
+        })
+      );
+      navigate("/dashboard");
+      
+      return {
+        ...initialState,
+        success: "Login successful",
+      };
+    } catch (error) {
+      console.error("Login error:", error);
 
-const Login = () => {
+      return {
+        ...initialState,
+        error: "Unable to connect to server. Please try again.",
+      };
+    }
+  };
+
   const [state, formAction, isPending] = useActionState(
     loginAction,
     initialState
