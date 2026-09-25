@@ -91,7 +91,10 @@ const Login = () => {
           expiresIn: data.expiresIn,
         })
       );
-      navigate("/dashboard");
+      
+      if(data.role === "APP_OWNER"){
+        navigate("/appOwnerDashboard");
+      }
       
       return {
         ...initialState,
