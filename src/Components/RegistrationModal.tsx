@@ -32,7 +32,8 @@ interface RegistrationModalProps {
         confirmPasswordError: string,
         error: string,
         success: string,
-    }
+    };
+    theme: string
 }
 const RegistrationModal: React.FC<RegistrationModalProps> = ({
     showRegisterModal,
@@ -41,7 +42,8 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
     formValues,
     setFormValues,
     formValueError,
-    handleRegistration
+    handleRegistration,
+    theme
 }) => {
     return (
         <Modal
@@ -49,9 +51,20 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
             onHide={handleCloseRegisterModal}
             size='lg'
               contentClassName="registration-modal"
-
         >
-            <Modal.Header closeButton>
+            <Modal.Header closeButton
+                style={
+                    theme === "dark" ? {
+                        background : "#151c2b",
+                        border: "1px solid rgba(255, 255, 255, 0.08)",
+                        color: "#ffffff"
+                    }:
+                    {
+                        background : "#ffffff",
+                        border: "1px solid rgba(15, 23, 42, 0.1)"
+                    }
+                }
+            >
                 <Modal.Title>
                     <i className="bi bi-person-plus-fill me-2" />
                     Register Owner
@@ -59,7 +72,19 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
             </Modal.Header>
 
             <Form noValidate>
-                <Modal.Body>
+                <Modal.Body
+                    style={
+                        theme === "dark" ? {
+                            background : "#151c2b",
+                            border: "1px solid rgba(255, 255, 255, 0.08)",
+                            color: "#ffffff"
+                        }:
+                        {
+                            background : "#ffffff",
+                            border: "1px solid rgba(15, 23, 42, 0.1)"
+                        }
+                    }
+                >
                     {/* Error */}
                     {formValueError.error && (
                         <Alert
@@ -216,7 +241,19 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
                         </Form.Group>
                 </Modal.Body>
 
-                <Modal.Footer>
+                <Modal.Footer
+                    style={
+                    theme === "dark" ? {
+                        background : "#151c2b",
+                        border: "1px solid rgba(255, 255, 255, 0.08)",
+                        color: "#ffffff"
+                    }:
+                    {
+                        background : "#ffffff",
+                        border: "1px solid rgba(15, 23, 42, 0.1)"
+                    }
+                }
+                >
                     <Button
                         variant="secondary"
                         onClick={handleCloseRegisterModal}
@@ -224,7 +261,7 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
                         Cancel
                     </Button>
 
-                    <Button
+                    <button
                         className="register-owner-btn"
                         disabled={isPending}
                         onClick={handleRegistration}
@@ -242,7 +279,7 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
                         ) : (
                             "Register"
                         )}
-                    </Button>
+                    </button>
                 </Modal.Footer>
             </Form>
         </Modal>

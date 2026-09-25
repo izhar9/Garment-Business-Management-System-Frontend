@@ -4,11 +4,23 @@ import type { RegisteredUser } from '../AppOwner';
 
 interface TableCardProps {
   registeredUsers: RegisteredUser[];
+  theme: string;
 }
 
-const TableCard: React.FC<TableCardProps>  = ({registeredUsers}) => {
+const TableCard: React.FC<TableCardProps>  = ({registeredUsers, theme}) => {
     return (
-        <Card className="owner-table-card">
+        <Card className="owner-table-card"
+            style={
+                theme === "dark" ? {
+                    background : "#151c2b",
+                    border: "1px solid rgba(255, 255, 255, 0.08)"
+                }:
+                {
+                    background : "#ffffff",
+                    border: "1px solid rgba(15, 23, 42, 0.1)"
+                }
+            }
+        >
             <Card.Body className="p-0">
                 <div className="table-header">
                     <div>
@@ -16,7 +28,7 @@ const TableCard: React.FC<TableCardProps>  = ({registeredUsers}) => {
                         <p>List of all registered business owners</p>
                     </div>
 
-                    <Badge className="user-count-badge">
+                    <Badge bg='transparent' className="user-count-badge">
                         {registeredUsers.length} Users
                     </Badge>
                 </div>
@@ -43,13 +55,12 @@ const TableCard: React.FC<TableCardProps>  = ({registeredUsers}) => {
                                     <td>
                                     <div className="user-info">
                                         <div className="user-avatar">
-                                        {registeredUser.username.charAt(0).toUpperCase()}
+                                            {registeredUser.username.charAt(0).toUpperCase()}
                                         </div>
 
                                         <div>
-                                        <strong>{registeredUser.username}</strong>
-
-                                        <small>ID: {registeredUser.id}</small>
+                                            <strong>{registeredUser.username}</strong>
+                                            <small>ID: {registeredUser.id}</small>
                                         </div>
                                     </div>
                                     </td>
@@ -57,40 +68,40 @@ const TableCard: React.FC<TableCardProps>  = ({registeredUsers}) => {
                                     <td>{registeredUser.email}</td>
 
                                     <td>
-                                    <Badge className="role-badge">
-                                        {registeredUser.role}
-                                    </Badge>
+                                        <Badge bg='transparent' className="role-badge">
+                                            {registeredUser.role}
+                                        </Badge>
                                     </td>
 
                                     <td>
-                                    <Badge
-                                        className={
-                                        registeredUser.status === "Active"
-                                            ? "status-badge active"
-                                            : "status-badge inactive"
-                                        }
-                                    >
-                                        <span className="status-dot" />
-                                        {registeredUser.status}
-                                    </Badge>
+                                        <Badge
+                                            className={
+                                            registeredUser.status === "Active"
+                                                ? "status-badge active"
+                                                : "status-badge inactive"
+                                            }
+                                        >
+                                            <span className="status-dot" />
+                                            {registeredUser.status}
+                                        </Badge>
                                     </td>
 
                                     <td className="text-end">
-                                    <Button
-                                        variant="link"
-                                        className="action-btn"
-                                        title="View user"
-                                    >
-                                        <i className="bi bi-eye" />
-                                    </Button>
+                                        <Button
+                                            variant="link"
+                                            className="action-btn"
+                                            title="View user"
+                                        >
+                                            <i className="bi bi-eye" />
+                                        </Button>
 
-                                    <Button
-                                        variant="link"
-                                        className="action-btn"
-                                        title="Edit user"
-                                    >
-                                        <i className="bi bi-pencil-square" />
-                                    </Button>
+                                        <Button
+                                            variant="link"
+                                            className="action-btn"
+                                            title="Edit user"
+                                        >
+                                            <i className="bi bi-pencil-square" />
+                                        </Button>
                                     </td>
                                 </tr>
                                 ))

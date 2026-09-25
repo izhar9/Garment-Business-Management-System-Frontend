@@ -262,32 +262,32 @@ const AppOwner = () => {
 
                 <Col xs="auto" className="d-flex align-items-center gap-2">
                     <button
-                        type="button"
-                        className="theme-toggle"
-                        onClick={toggleTheme}
-                        aria-label="Toggle theme"
+                      type="button"
+                      className="theme-toggle me-2"
+                      onClick={toggleTheme}
+                      aria-label="Toggle theme"
                     >
-                        <i
-                            className={`bi ${
-                            theme === "dark" ? "bi-sun-fill" : "bi-moon-fill"
-                            }`}
-                        />
+                      <i
+                        className={`bi ${
+                        theme === "dark" ? "bi-sun-fill" : "bi-moon-fill"
+                        }`}
+                      />
                     </button>
-                    <Button
-                        className="register-owner-btn"
-                        onClick={() => setShowRegisterModal(true)}
+                    <button
+                      className="register-owner-btn"
+                      onClick={() => setShowRegisterModal(true)}
                     >
-                        <i className="bi bi-person-plus-fill me-2" />
-                        Register Owner
-                    </Button>
+                      <i className="bi bi-person-plus-fill me-2" />
+                      Register Owner
+                    </button>
                 </Col>
             </Row>
 
             {/* Stats */}
-            <StatCard registeredUsers = {registeredUsers} />
+            <StatCard registeredUsers = {registeredUsers} theme = {theme}/>
 
             {/* Users Table */}
-            <TableCard registeredUsers = {registeredUsers} />
+            <TableCard registeredUsers = {registeredUsers} theme = {theme}/>
 
         </Container>
 
@@ -300,6 +300,7 @@ const AppOwner = () => {
         formValues={formValues}
         setFormValues={setFormValues}
         formValueError = {formValueError}
+        theme = {theme}
       />
     </div>
   );

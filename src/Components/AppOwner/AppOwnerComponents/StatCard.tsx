@@ -4,13 +4,23 @@ import type { RegisteredUser } from '../AppOwner'
 
 interface StatCardProps {
   registeredUsers: RegisteredUser[];
+  theme: string;
 }
 
-const StatCard:React.FC<StatCardProps> = ({registeredUsers}) => {
+const StatCard:React.FC<StatCardProps> = ({registeredUsers, theme}) => {
     return (
         <Row className="g-3 mb-4">
             <Col md={4}>
-                <Card className="owner-stat-card">
+                <Card className="owner-stat-card" style={
+                    theme === "dark" ? {
+                        background : "#151c2b",
+                        border: "1px solid rgba(255, 255, 255, 0.08)"
+                    }:
+                    {
+                        background : "#ffffff",
+                        border: "1px solid rgba(15, 23, 42, 0.1)"
+                    }
+                }>
                     <Card.Body>
                         <div className="stat-icon">
                             <i className="bi bi-people-fill" />
@@ -25,7 +35,16 @@ const StatCard:React.FC<StatCardProps> = ({registeredUsers}) => {
             </Col>
 
             <Col md={4}>
-                <Card className="owner-stat-card">
+                <Card className="owner-stat-card" style={
+                    theme === "dark" ? {
+                        background : "#151c2b",
+                        border: "1px solid rgba(255, 255, 255, 0.08)"
+                    }:
+                    {
+                        background : "#ffffff",
+                        border: "1px solid rgba(15, 23, 42, 0.1)"
+                    }
+                }>
                     <Card.Body>
                         <div className="stat-icon active">
                             <i className="bi bi-person-check-fill" />
@@ -45,7 +64,16 @@ const StatCard:React.FC<StatCardProps> = ({registeredUsers}) => {
             </Col>
 
             <Col md={4}>
-                <Card className="owner-stat-card">
+                <Card className="owner-stat-card" style={
+                    theme === "dark" ? {
+                        background : "#151c2b",
+                        border: "1px solid rgba(255, 255, 255, 0.08)"
+                    }:
+                    {
+                        background : "#ffffff",
+                        border: "1px solid rgba(15, 23, 42, 0.1)"
+                    }
+                }>
                     <Card.Body>
                         <div className="stat-icon inactive">
                             <i className="bi bi-person-x-fill" />
