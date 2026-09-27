@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  Button,
   Col,
   Container,
   Row,
@@ -152,7 +151,6 @@ const AppOwner = () => {
       }));
       return;
     }
-    
     setIsPending(true)
     try {
       const response = await fetch(
