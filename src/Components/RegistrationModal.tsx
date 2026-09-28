@@ -171,12 +171,14 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
                                 placeholder="Enter your mobile number"
                                 className="login-input"
                                 value={formValues.mobileNo}
-                                onChange={(e) =>
+                                onChange={(e) => {
+                                    const value = e.target.value.replace(/\D/g, "").slice(0, 10);
+
                                     setFormValues((prev) => ({
                                         ...prev,
-                                        mobileNo: e.target.value,
-                                    }))
-                                }
+                                        mobileNo: value,
+                                    }));
+                                }}
                                 isInvalid={!!formValueError.mobileNoError}
                                 readOnly={isPending}
                             />

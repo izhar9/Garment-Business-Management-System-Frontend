@@ -76,6 +76,29 @@ const AppOwner = () => {
 
   const [registeredUsers, setRegisteredUsers] = useState<RegisteredUser[]>([]);
 
+  useEffect(() => {
+    const findUsers = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:8080/api/users/owners",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${user?.accessToken}`,
+            }
+          }
+        )
+        const data = await response.json();
+        setRegisteredUsers(data)
+      }catch (error) {
+        console.log("Error >>", error)
+      }
+    }
+
+    findUsers();
+  },[user])
+
   const handleRegistration = async () => {
     // Clear previous errors
     setFormValueError({
@@ -234,58 +257,58 @@ const AppOwner = () => {
   
   return (
     <div className="app-owner-page">
-        <Container fluid className="app-owner-container">
-            {/* Header */}
-            <Row className="align-items-center mb-4">
-                <Col>
-                    <div className="owner-heading">
-                        <h2>
-                            Welcome, <span>{user?.user?.username}</span>
-                        </h2>
+      <Container fluid className="app-owner-container px-4">
+        {/* Header */}
+        <Row className="align-items-center mb-4">
+          <Col>
+            <div className="owner-heading">
+              <h2>
+                Welcome, <span>{user?.user?.username}</span>
+              </h2>
 
-                        <p>
-                            Manage registered business owners from your administration
-                            panel.
-                        </p>
-                    </div>
-                </Col>
+              <p>
+                Manage registered business owners from your administration
+                panel.
+              </p>
+            </div>
+          </Col>
 
-                <Col xs="auto" className="d-flex align-items-center gap-2">
-                    <button
-                      type="button"
-                      className="theme-toggle me-2"
-                      onClick={toggleTheme}
-                      aria-label="Toggle theme"
-                    >
-                      <i
-                        className={`bi ${
-                        theme === "dark" ? "bi-sun-fill" : "bi-moon-fill"
-                        }`}
-                      />
-                    </button>
-                    <button
-                      className="register-owner-btn"
-                      onClick={() => setShowRegisterModal(true)}
-                    >
-                      <i className="bi bi-person-plus-fill me-2" />
-                      Register Owner
-                    </button>
-                    <Button
-                      onClick={handleLogout}
-                    >
-                      <i className="bi bi-box-arrow-right me-2" />
-                      Logout
-                    </Button>
-                </Col>
-            </Row>
+          <Col xs="auto" className="d-flex align-items-center gap-2">
+            <button
+              type="button"
+              className="theme-toggle me-2"
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+            >
+              <i
+                className={`bi ${
+                theme === "dark" ? "bi-sun-fill" : "bi-moon-fill"
+                }`}
+              />
+            </button>
+            <button
+              className="register-owner-btn"
+              onClick={() => setShowRegisterModal(true)}
+            >
+              <i className="bi bi-person-plus-fill me-2" />
+              Register Owner
+            </button>
+            <Button
+              onClick={handleLogout}
+            >
+              <i className="bi bi-box-arrow-right me-2" />
+              Logout
+            </Button>
+          </Col>
+        </Row>
 
-            {/* Stats */}
-            <StatCard registeredUsers = {registeredUsers} theme = {theme}/>
+        {/* Stats */}
+        <StatCard registeredUsers = {registeredUsers} theme = {theme}/>
 
-            {/* Users Table */}
-            <TableCard registeredUsers = {registeredUsers} theme = {theme}/>
+        {/* Users Table */}
+        <TableCard registeredUsers = {registeredUsers} theme = {theme}/>
 
-        </Container>
+      </Container>
 
       {/* Register Owner Modal */}
       <RegistrationModal 

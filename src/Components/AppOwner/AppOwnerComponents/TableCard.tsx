@@ -76,24 +76,17 @@ const TableCard: React.FC<TableCardProps>  = ({registeredUsers, theme}) => {
                                     <td>
                                         <Badge
                                             className={
-                                            registeredUser.status === "Active"
+                                            registeredUser.active === true
                                                 ? "status-badge active"
                                                 : "status-badge inactive"
                                             }
                                         >
                                             <span className="status-dot" />
-                                            {registeredUser.status}
+                                            {registeredUser.active ? "Active" : "InActive"}
                                         </Badge>
                                     </td>
 
                                     <td className="text-end">
-                                        <Button
-                                            variant="link"
-                                            className="action-btn"
-                                            title="View user"
-                                        >
-                                            <i className="bi bi-eye" />
-                                        </Button>
 
                                         <Button
                                             variant="link"
