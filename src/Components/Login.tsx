@@ -75,8 +75,6 @@ const Login = () => {
       }
 
       const data = await response.json();
-
-      console.log("Login response:", data);
       
       // Store response in Redux
       dispatch(

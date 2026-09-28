@@ -54,7 +54,7 @@ const StatCard:React.FC<StatCardProps> = ({registeredUsers, theme}) => {
                             <p>Active Owners</p>
                             <h3>
                                 {
-                                registeredUsers.filter((item) => item.status === "Active")
+                                registeredUsers.filter((item) => item.active === true)
                                     .length
                                 }
                             </h3>
@@ -84,7 +84,7 @@ const StatCard:React.FC<StatCardProps> = ({registeredUsers, theme}) => {
                             <h3>
                                 {
                                     registeredUsers.filter(
-                                        (item) => item.status === "Inactive",
+                                        (item) => item.active === false,
                                     ).length
                                 }
                             </h3>

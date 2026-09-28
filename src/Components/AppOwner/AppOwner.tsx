@@ -1,27 +1,36 @@
 import { useEffect, useState } from "react";
 import {
+  Button,
   Col,
   Container,
   Row,
 } from "react-bootstrap";
 
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 import "./AppOwner.css";
 import StatCard from "./AppOwnerComponents/StatCard";
 import TableCard from "./AppOwnerComponents/TableCard";
 import RegistrationModal from "../RegistrationModal";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../features/auth/authSlice";
 
 export interface RegisteredUser {
   id: string;
   username: string;
   email: string;
   role: string;
-  status: "Active" | "Inactive";
+  active: boolean,
+  createdAt: string,
+  mobileNo: string,
+
 }
 
 const AppOwner = () => {
   const user = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
 
   const [showRegisterModal, setShowRegisterModal] = useState(false);
 
@@ -65,31 +74,7 @@ const AppOwner = () => {
     setTheme((currentTheme) => (currentTheme === "dark" ? "light" : "dark"));
   };
 
-  // Temporary data.
-  // Later this should come from your Spring Boot API.
-  const [registeredUsers] = useState<RegisteredUser[]>([
-    {
-      id: "1",
-      username: "Izhar123sd",
-      email: "izharsad@gmail.com",
-      role: "APP_OWNER",
-      status: "Active",
-    },
-    {
-      id: "2",
-      username: "Ahmed123",
-      email: "ahmed@gmail.com",
-      role: "APP_OWNER",
-      status: "Active",
-    },
-    {
-      id: "3",
-      username: "RahulGarments",
-      email: "rahul@gmail.com",
-      role: "APP_OWNER",
-      status: "Inactive",
-    },
-  ]);
+  const [registeredUsers, setRegisteredUsers] = useState<RegisteredUser[]>([]);
 
   const handleRegistration = async () => {
     // Clear previous errors
@@ -169,7 +154,7 @@ const AppOwner = () => {
           }),
         }
       );
-          
+
       if (!response.ok) {
         let errorMessage = "Unable to register owner.";
 
@@ -188,7 +173,7 @@ const AppOwner = () => {
         return;
       }
 
-      const data = await response.json();
+      const data = await response.text();
 
       console.log("Registration response:", data);
 
@@ -206,7 +191,9 @@ const AppOwner = () => {
         confirmPassword: "",
       });
 
-      setShowRegisterModal(false);
+      setTimeout(() => {
+        handleCloseRegisterModal();
+      }, 2000);
 
     } catch (error) {
       console.error("Registration error:", error);
@@ -240,6 +227,11 @@ const AppOwner = () => {
     })
   }
 
+  const handleLogout = () => {
+    dispatch(logout())
+    navigate("/")
+  }
+  
   return (
     <div className="app-owner-page">
         <Container fluid className="app-owner-container">
@@ -278,6 +270,12 @@ const AppOwner = () => {
                       <i className="bi bi-person-plus-fill me-2" />
                       Register Owner
                     </button>
+                    <Button
+                      onClick={handleLogout}
+                    >
+                      <i className="bi bi-box-arrow-right me-2" />
+                      Logout
+                    </Button>
                 </Col>
             </Row>
 

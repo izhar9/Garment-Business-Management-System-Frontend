@@ -95,6 +95,12 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
                         </Alert>
                     )}
 
+                    {formValueError.success && (
+                        <Alert variant="success" className="login-alert">
+                            {formValueError.success}
+                        </Alert>
+                    )}
+
                         {/* Username */}
                         <Form.Group className="mb-3">
                             <Form.Label>
