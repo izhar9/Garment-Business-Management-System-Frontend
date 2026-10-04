@@ -23,7 +23,6 @@ export interface RegisteredUser {
   active: boolean,
   createdAt: string,
   mobileNo: string,
-
 }
 
 const AppOwner = () => {
@@ -205,6 +204,23 @@ const AppOwner = () => {
         success: "Registration successful",
       }));
 
+      const now = new Date();
+      const date = now.toISOString()
+        .replace("T", " ")
+        .replace("Z", "");
+
+      setRegisteredUsers(prev => [
+        ...prev,
+        {
+          id: prev.length > 0 ? prev[prev.length - 1].id + 1 : "1",
+          username: formValues.username,
+          email: formValues.email,
+          role: "OWNER",
+          active: true,
+          createdAt: date,
+          mobileNo: formValues.mobileNo,
+        }
+      ])
       // Reset form after successful registration
       setFormValues({
         username: "",
