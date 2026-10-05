@@ -92,6 +92,8 @@ const Login = () => {
       
       if(data.role === "APP_OWNER"){
         navigate("/appOwnerDashboard");
+      }else if(data.role === "OWNER"){
+        navigate("/ownerDashboard");
       }
       
       return {
